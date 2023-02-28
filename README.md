@@ -1,3 +1,3 @@
-### nvim-dap-neoruby
+### neoruby-debugger
 
-最小構成、使い方は[こちら](https://github.com/takkii/nvim-dap-neoruby/wiki/manual)。
+使い方は[こちら](https://github.com/takkii/nvim-dap-neoruby/wiki/manual)。
