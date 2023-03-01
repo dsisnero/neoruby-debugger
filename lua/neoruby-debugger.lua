@@ -7,13 +7,6 @@ local function load_module(module_name)
 end
 
 local function setup_ruby_adapter(dap)
-  local dap = require('dap')
-  dap.adapters.ruby = {
-    type = 'executable';
-    command = 'bundle';
-    args = {'exec', 'readapt', 'stdio'};
-  }
-
   dap.adapters.ruby = function(callback, config)
     local handle
     local stdout = vim.loop.new_pipe(false)
@@ -29,7 +22,10 @@ local function setup_ruby_adapter(dap)
       script = config.script
     end
 
-    if config.bundle == 'bundle' then
+    if config.bundle == 'bunlde exec rails s' then
+      local dap = require('dap')
+      args = {'-n', '--open', '--port', config.port, '-c', '--', 'bundle', 'exec', 'readapt', 'stdio'}
+    elseif config.bundle == 'bundle' then
       args = {'-n', '--open', '--port', config.port, '-c', '--', 'bundle', 'exec', config.command, script}
     else
       args = {'--open', '--port', config.port, '-c', '--', config.command, script}
@@ -94,7 +90,7 @@ local function setup_ruby_configuration(dap)
   {
     type = 'ruby',
     name = 'run current spec file',
-    bundle = 'bundle';
+    bundle = 'bundle',
     request = 'attach',
     localfs = true,
     command = 'rspec',
@@ -108,50 +104,50 @@ local function setup_ruby_configuration(dap)
     waiting = 1000,
   },
   {
-    type = 'ruby';
-    name = 'run rspec current_file:current_line';
-    bundle = 'bundle';
-    request = 'attach';
-    command = "rspec";
-    script = "${file}";
-    port = 38698;
-    server = '127.0.0.1';
+    type = 'ruby',
+    name = 'run rspec current_file:current_line',
+    bundle = 'bundle',
+    request = 'attach',
+    command = "rspec",
+    script = "${file}",
+    port = 38698,
+    server = '127.0.0.1',
     options = {
      source_filetype = 'ruby';
     };
-    localfs = true;
-    waiting = 1000;
-    current_line = true;
+    localfs = true,
+    waiting = 1000,
+    current_line = true,
   },
   {
-    type = 'ruby';
-    name = 'run rspec';
-    bundle = 'bundle';
-    request = 'attach';
-    command = "rspec";
-    script = "./spec";
-    port = 38698;
-    server = '127.0.0.1';
+    type = 'ruby',
+    name = 'run rspec',
+    bundle = 'bundle',
+    request = 'attach',
+    command = "rspec",
+    script = "./spec",
+    port = 38698,
+    server = '127.0.0.1',
     options = {
       source_filetype = 'ruby';
     };
-    localfs = true;
-    waiting = 1000;
+    localfs = true,
+    waiting = 1000,
   },
   {
-    type = 'ruby';
-    request = 'launch';
-    name = 'Rails';
-    program = 'bundle';
-    programArgs = {'exec', 'rails', 's'};
-    useBundler = true;
-    port = 38698;
-    server = '127.0.0.1';
+    type = 'ruby',
+    request = 'launch',
+    name = 'run rails',
+    program = 'bundle',
+    programArgs = {'exec', 'rails', 's'},
+    useBundler = true,
+    port = 38698,
+    server = '127.0.0.1',
     options = {
      source_filetype = 'ruby';
     };
-    localfs = true;
-    waiting = 1000;
+    localfs = true,
+    waiting = 1000,
   },
 }
 
