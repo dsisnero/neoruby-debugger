@@ -15,6 +15,7 @@ local function setup_ruby_adapter(dap)
     local args
     local script
     local rdbg
+    local type = 'executable'
 
     if config.current_line then
       script = config.script .. ':' .. vim.fn.line('.')
@@ -22,7 +23,7 @@ local function setup_ruby_adapter(dap)
       script = config.script
     end
 
-    if config.bundle == 'bunlde exec rails s' then
+    if type.bundle == 'bundle exec rails s' then
       local dap = require('dap')
       args = {'-n', '--open', '--port', config.port, '-c', '--', 'bundle', 'exec', 'readapt', 'stdio'}
     elseif config.bundle == 'bundle' then
