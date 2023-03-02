@@ -142,7 +142,7 @@ local function setup_ruby_configuration(dap)
     program = 'bundle',
     programArgs = {'exec', 'rails', 's'},
     useBundler = true,
-    port = 38698,
+    port = 3000,
     server = '127.0.0.1',
     options = {
      source_filetype = 'ruby';
