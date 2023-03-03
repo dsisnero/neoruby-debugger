@@ -2,7 +2,7 @@ local M = {}
 
 local function load_module(module_name)
   local ok, module = pcall(require, module_name)
-  assert(ok, string.format('dap-neoruby dependency error: %s not installed', module_name))
+  assert(ok, string.format('neoruby-debugger dependency error: %s not installed', module_name))
   return module
 end
 
@@ -15,7 +15,6 @@ local function setup_ruby_adapter(dap)
     local args
     local script
     local rdbg
-    local type = 'executable'
 
     if config.current_line then
       script = config.script .. ':' .. vim.fn.line('.')
@@ -27,6 +26,7 @@ local function setup_ruby_adapter(dap)
       args = {'-n', '--open', '--port', config.port, '-c', '--', 'bundle', 'exec', config.command, script}
     elseif config.bundle == 'bundle exec' then
       local dap = require('dap')
+      local type = 'executable'
       args = {'-n', '--open', '--port', config.port, '-c', '--', 'bundle', 'exec', 'readapt', 'stdio'}
     else
       args = {'--open', '--port', config.port, '-c', '--', config.command, script}
