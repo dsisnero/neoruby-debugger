@@ -23,11 +23,11 @@ local function setup_ruby_adapter(dap)
       script = config.script
     end
 
-    if type.bundle == 'bundle exec rails s' then
+    if config.bundle == 'bundle' then
+      args = {'-n', '--open', '--port', config.port, '-c', '--', 'bundle', 'exec', config.command, script}
+    elseif config.bundle == 'bundle exec' then
       local dap = require('dap')
       args = {'-n', '--open', '--port', config.port, '-c', '--', 'bundle', 'exec', 'readapt', 'stdio'}
-    elseif config.bundle == 'bundle' then
-      args = {'-n', '--open', '--port', config.port, '-c', '--', 'bundle', 'exec', config.command, script}
     else
       args = {'--open', '--port', config.port, '-c', '--', config.command, script}
     end
@@ -80,7 +80,7 @@ local function setup_ruby_configuration(dap)
     request = 'attach',
     localfs = true,
     command = 'ruby',
-    script = '${file}',
+    script = "${file}",
     port = 38698,
     server = '127.0.0.1',
     options = {
@@ -95,7 +95,7 @@ local function setup_ruby_configuration(dap)
     request = 'attach',
     localfs = true,
     command = 'rspec',
-    script = '${file}',
+    script = "${file}",
     port = 38698,
     server = '127.0.0.1',
     options = {
@@ -109,7 +109,7 @@ local function setup_ruby_configuration(dap)
     name = 'run rspec current_file:current_line',
     bundle = 'bundle',
     request = 'attach',
-    command = "rspec",
+    command = 'rspec',
     script = "${file}",
     port = 38698,
     server = '127.0.0.1',
@@ -125,7 +125,7 @@ local function setup_ruby_configuration(dap)
     name = 'run rspec',
     bundle = 'bundle',
     request = 'attach',
-    command = "rspec",
+    command = 'rspec',
     script = "./spec",
     port = 38698,
     server = '127.0.0.1',
@@ -139,6 +139,7 @@ local function setup_ruby_configuration(dap)
     type = 'ruby',
     request = 'launch',
     name = 'run rails',
+    bundle = 'bundle exec',
     program = 'bundle',
     programArgs = {'exec', 'rails', 's'},
     useBundler = true,
