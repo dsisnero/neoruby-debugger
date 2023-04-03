@@ -44,6 +44,16 @@ local function setup_ruby_adapter(dap)
       rdbg = 'rdbg'
     end
 
+    if vim.fn.has('win32') == 1 or vim.fn.has('win64') == 1 or config.bundle == 'bundle exec' then
+      readapt = 'readapt.bat'
+      rails = 'rails.bat'
+      bundle = 'bundle.bat'
+    else
+      readapt = 'readapt'
+      rails = 'rails'
+      bundle = 'bundle'
+    end
+
     handle, pid_or_err = vim.loop.spawn(rdbg, opts, function(code)
       handle:close()
       if code ~= 0 then
