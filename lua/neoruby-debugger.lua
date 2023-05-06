@@ -243,7 +243,9 @@ local function debug_test(testname, testpath)
     request = "launch",
     mode = "test",
     program = testpath,
-    args = { "rspec", testname },
+    -- Golang test option.
+    -- args = { "-test.run", testname },
+    args = { testname },
   })
 end
 
