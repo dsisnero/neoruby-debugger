@@ -6,7 +6,7 @@ local M = {
 }
 
 local default_config = {
-  delve = {
+  rdbg = {
     initialize_timeout_sec = 20,
     port = "${port}",
   },
@@ -58,7 +58,7 @@ local function get_arguments()
   end
 end
 
-local function setup_ruby_adapter(dap)
+local function setup_rgdb_adapter(dap)
   dap.adapters.ruby = function(callback, config)
     local handle
     local stdout = vim.loop.new_pipe(false)
@@ -136,7 +136,7 @@ local function setup_ruby_adapter(dap)
   end
 end
 
-local function setup_ruby_configuration(dap)
+local function setup_rgdb_configuration(dap)
  dap.configurations.ruby = {
   {
     type = 'ruby',
@@ -207,18 +207,11 @@ local function setup_ruby_configuration(dap)
     program = 'bundle',
     programArgs = {'exec', 'rails', 's'},
     useBundler = true,
-    -- default
-    port1 = 1234,
-    -- localhost
-    port2 = 3000,
-    -- server
-    port3 = 80,
-    -- ruby
-    port4 = 38698,
-    -- OR
-    port = {
-     port1 or port2 or port3 or port4
-    };
+    useDefault = 1234,
+    useLocalhost = 3000,
+    useServer = 80,
+    usePort = 38698,
+    port = useDefault or useLocalhost or useServer or usePort,
     server = '127.0.0.1',
     options = {
      source_filetype = 'ruby';
@@ -242,8 +235,8 @@ end
 function M.setup(opts)
   local config = vim.tbl_deep_extend("force", default_config, opts or {})
   local dap = load_module("dap")
-  setup_ruby_adapter(dap, config)
-  setup_ruby_configuration(dap, config)
+  setup_rgdb_adapter(dap, config)
+  setup_rgdb_configuration(dap, config)
 end
 
 local function debug_test(testname, testpath)
