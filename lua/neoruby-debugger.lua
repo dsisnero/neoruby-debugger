@@ -207,7 +207,18 @@ local function setup_ruby_configuration(dap)
     program = 'bundle',
     programArgs = {'exec', 'rails', 's'},
     useBundler = true,
-    port = 1234 or 3000 or 80 or 38698,
+    -- default
+    port1 = 1234,
+    -- localhost
+    port2 = 3000,
+    -- server
+    port3 = 80,
+    -- ruby
+    port4 = 38698,
+    -- OR
+    port = {
+     port1 or port2 or port3 or port4
+    };
     server = '127.0.0.1',
     options = {
      source_filetype = 'ruby';
