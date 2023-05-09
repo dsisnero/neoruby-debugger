@@ -58,7 +58,7 @@ local function get_arguments()
   end
 end
 
-local function setup_rgdb_adapter(dap)
+local function setup_rdbg_adapter(dap)
   dap.adapters.ruby = function(callback, config)
     local handle
     local stdout = vim.loop.new_pipe(false)
@@ -116,7 +116,7 @@ local function setup_rgdb_adapter(dap)
       end
     end)
 
-    assert(handle, 'Error running rgdb: ' .. tostring(pid_or_err))
+    assert(handle, 'Error running rdbg: ' .. tostring(pid_or_err))
 
     stdout:read_start(function(err, chunk)
       assert(not err, err)
@@ -136,7 +136,7 @@ local function setup_rgdb_adapter(dap)
   end
 end
 
-local function setup_rgdb_configuration(dap)
+local function setup_rdbg_configuration(dap)
  dap.configurations.ruby = {
   {
     type = 'ruby',
@@ -235,8 +235,8 @@ end
 function M.setup(opts)
   local config = vim.tbl_deep_extend("force", default_config, opts or {})
   local dap = load_module("dap")
-  setup_rgdb_adapter(dap, config)
-  setup_rgdb_configuration(dap, config)
+  setup_rdbg_adapter(dap, config)
+  setup_rdbg_configuration(dap, config)
 end
 
 local function debug_test(testname, testpath)
