@@ -201,17 +201,30 @@ local function setup_rdbg_configuration(dap)
   },
   {
     type = 'ruby',
-    request = 'launch',
     name = 'run rails',
+    bundle = 'bundle',
+    request = 'attach',
+    command = 'rails',
+    script = "s",
+    port = 38698,
+    server = "127.0.0.1",
+    options = {
+      source_filetype = "ruby",
+    };
+    localfs = true,
+    waiting = 1000,
+  },
+  {
+    type = 'ruby',
+    request = 'launch',
+    name = 'bundle exec run rails',
     bundle = 'bundle exec',
     program = 'bundle',
     programArgs = {'exec', 'rails', 's'},
     useBundler = true,
-    useDefault = 1234,
-    useLocalhost = 3000,
-    useServer = 80,
-    usePort = 38698,
-    port = useDefault or useLocalhost or useServer or usePort,
+    -- port number select.
+    -- port = 1234 or 3000 or 80,
+    port = 38698,
     server = '127.0.0.1',
     options = {
      source_filetype = 'ruby';
