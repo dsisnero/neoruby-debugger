@@ -19,7 +19,7 @@
 <br />
 
 <div align="center">
-   <p>使い方は<a href="https://github.com/takkii/neoruby-debugger/wiki/manual">こちら</a>!</p>
+   <p>使い方は<a href="https://github.com/takkii/neoruby-debugger/wiki/manual">こちら</a> !</p>
 </div>
 
 <br />
