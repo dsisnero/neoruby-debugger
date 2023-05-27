@@ -78,22 +78,13 @@ local function setup_rdbg_adapter(dap)
       args = {'-n', '--open', '--port', config.port, '-c', '--', 'bundle', 'exec', config.command, script}
 
     elseif config.bundle == 'bundle exec' then
-
-      if vim.fn.has('win32') == 1 or vim.fn.has('win64') == 1 then
-        readapt = 'readapt.bat'
-        rails = 'rails.bat'
-        bundle = 'bundle.bat'
-      else
-        readapt = 'readapt'
-        rails = 'rails'
-        bundle = 'bundle'
-      end
-
       local dap = require('dap')
       local type = 'executable'
       args = {'-n', '--open', '--port', config.port, '-c', '--', 'bundle', 'exec', 'readapt', 'stdio'}
+
     else
       args = {'--open', '--port', config.port, '-c', '--', config.command, script}
+
     end
 
     local opts = {
@@ -104,8 +95,14 @@ local function setup_rdbg_adapter(dap)
 
     if vim.fn.has('win32') == 1 or vim.fn.has('win64') == 1 then
       rdbg = 'rdbg.bat'
+      rails = 'rails.bat'
+      bundle = 'bundle.bat'
+      readapt = 'readapt.bat'
     else
       rdbg = 'rdbg'
+      rails = 'rails'
+      bundle = 'bundle'
+      readapt = 'readapt'
     end
 
     handle, pid_or_err = vim.loop.spawn(rdbg, opts, function(code)
