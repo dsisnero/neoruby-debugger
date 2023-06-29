@@ -24,6 +24,43 @@ You can install `neoruby-debugger` using your favorite Vim plugin manager. Here'
 
 ### Configuration
 
+# Neoruby-debugger
+
+## Description
+
+Neoruby-debugger is a Ruby debugger integration for Neovim that utilizes the DAP (Debug Adapter Protocol) to provide debugging capabilities within the editor.
+
+## Installation
+
+Use your preferred package manager to install the neoruby-debugger plugin in Neovim.
+
+## Configuration
+
+You can customize the DAP configurations for neoruby-debugger by modifying the `dap_configurations` table. Here's how you can add additional DAP configurations:
+
+```lua
+-- Example DAP configurations
+local my_dap_configs = {
+  {
+    type = 'ruby',
+    name = 'Custom Ruby Configuration',
+    request = 'launch',
+    program = '${file}',
+    args = { '--custom-arg' },
+    cwd = vim.fn.getcwd(),
+    sourceFileMap = {
+      ['path/to/source'] = 'path/to/mapped/source'
+    },
+    -- Add any other desired configuration options
+  },
+}
+
+-- Add your custom DAP configurations to the neoruby-debugger setup
+require('neoruby-debugger').setup({
+  dap_configurations = my_dap_configs
+})
+
+
 The `neoruby-debugger` plugin provides several configuration options that can be customized using the `M.setup` function. You can modify the behavior of the debugger by passing an options table to `M.setup`.
 
 Example usage of `M.setup`:
@@ -41,6 +78,7 @@ The available configuration options include:
 
 - `rdbg.initialize_timeout_sec` (number): The timeout value (in seconds) for initializing the debugger. Default is 20 seconds.
 - `rdbg.port` (string): The port number used for the debugger. You can use the `${port}` placeholder to specify a dynamic port number.
+- `dap_configurations` (table): Other dap configurations you want to add.
 
 You can modify these options according to your requirements.
 
